@@ -93,8 +93,31 @@ const createDepartment = () => {
 };
 
 const createRole = () => {
+    // an array of questions for inquirer
+    const questions = [
+        {
+            type: 'text',
+            message: 'What is the title of the new role?',   
+            name: 'roletitle',
+        },
 
-};
+        {
+            type: 'text',
+            message: 'What is the salary of the role?',   
+            name: 'rolesalary',
+        },
+        {
+            type: 'text',
+            message: 'Which department should this role be in?',
+            name: 'roledept',
+        }
+    ]
+    inquirer.prompt(questions).then((answer) => {
+        connection.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [answer.roletitle, answer.rolesalary, answer.roledept]), (err, result) => {
+            console.table(result);
+        
+        }})}
+
 
 const createEmployee = () => {
 
