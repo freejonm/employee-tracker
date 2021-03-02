@@ -113,7 +113,7 @@ const viewDepartments = () => {
 
 
 const viewEmployees = () => {
-    connection.query('SELECT * FROM employee', (err, res) => {
+    connection.query('SELECT * FROM employee ORDER BY last_name', (err, res) => {
         if (err) throw err;
 
         console.table(res);
