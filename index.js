@@ -2,6 +2,7 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 const consoleTable = require('console.table');
+const { throwError } = require('rxjs');
 
 // connection object
 const connection = mysql.createConnection({
@@ -20,7 +21,7 @@ connection.connect((err) => {
     if (err) throw err;
     console.log(`connected as id ${connection.threadId}`);
     startApp();
-    connection.end;
+   
 }
 
 )
@@ -91,10 +92,13 @@ const createEmployee = () => {
 
 const viewDepartments = () => {
     connection.query('SELECT * FROM department', (err, res) => {
-        consoleTable.res;
+        if (err) throw err;
+
+        console.table(res);
         
-    })
-};
+        
+    
+})};
 
 
 const viewEmployees = () => {
