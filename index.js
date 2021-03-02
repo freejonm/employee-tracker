@@ -111,7 +111,11 @@ const viewEmployees = () => {
 
 
 const viewRoles = () => {
+    connection.query('SELECT * FROM role', (err, res) => {
+        if (err) throw err;
 
+        console.table(res);
+    })
 };
 
 // update employee roles with PUT
