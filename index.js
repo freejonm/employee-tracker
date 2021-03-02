@@ -120,6 +120,29 @@ const createRole = () => {
 
 
 const createEmployee = () => {
+    const questions = [
+        {
+            type: 'text',
+            message: 'What is the first name of the employee?',   
+            name: 'firstname',
+        },
+
+        {
+            type: 'text',
+            message: 'What is their last name?',   
+            name: 'lastname',
+        },
+        {
+            type: 'text',
+            message: 'What is their role id?',
+            name: 'roleid',
+        }
+    ]
+    inquirer.prompt(questions).then((answer) => {
+        connection.query("INSERT INTO employee (first_name, last_name, role_id) VALUES (?, ?, ?)", [answer.firstname, answer.lastname, answer.roleid]), (err, result) => {
+            console.log(result);
+            
+        }})
 
 };
 
