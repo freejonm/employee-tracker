@@ -84,10 +84,8 @@ const createDepartment = () => {
     }).then((answer) => {
         
         connection.query("INSERT INTO department (name) VALUES (?)", [answer.department]), (err, result) => {
-            if (err) throw err;
-
-            console.log(`New department ${answer.department} added.`
-        )
+            console.table(result);
+        
         }
     })
 
@@ -105,7 +103,7 @@ const createEmployee = () => {
 // read departments roles, employes
 
 const viewDepartments = () => {
-    connection.query('SELECT * FROM department', (err, res) => {
+    connection.query('SELECT * FROM department ORDER BY id', (err, res) => {
         if (err) throw err;
 
         console.table(res);
