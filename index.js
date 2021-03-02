@@ -2,7 +2,7 @@
 const mysql = require('mysql');
 const inquirer = require('inquirer');
 const consoleTable = require('console.table');
-const { throwError } = require('rxjs');
+
 
 // connection object
 const connection = mysql.createConnection({
@@ -75,8 +75,22 @@ const startApp = () => {
 
 };
 
-// create departments, roles, employees with POST
+// create departments, roles, employees
 const createDepartment = () => {
+    inquirer.prompt({
+        name: 'department',
+        type: 'text',
+        message: 'What is the name of the new department?',
+    }).then((answer) => {
+        
+        connection.query("INSERT INTO department (name) VALUES (?)", [answer.department]), (err, result) => {
+            if (err) throw err;
+
+            console.log(`New department ${answer.department} added.`
+        )
+        }
+    })
+
 
 };
 
@@ -88,7 +102,7 @@ const createEmployee = () => {
 
 };
 
-// read departments roles, employes with GET
+// read departments roles, employes
 
 const viewDepartments = () => {
     connection.query('SELECT * FROM department', (err, res) => {
@@ -118,7 +132,7 @@ const viewRoles = () => {
     })
 };
 
-// update employee roles with PUT
+// update employee roles
 
 const updateRole = () => {
 
