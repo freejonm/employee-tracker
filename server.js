@@ -1,6 +1,6 @@
 // dependencies
 const mysql = require('mysql');
-const inquirer = require('inuirer');
+const inquirer = require('inquirer');
 const consoleTable = require('console.table');
 
 // connection object
@@ -18,6 +18,7 @@ const connection = mysql.createConnection({
 // connecting to database
 connection.connect((err) => {
     if (err) throw err;
+    console.log(`connected as id ${connection.threadId}`);
 }
 
 )
