@@ -120,7 +120,7 @@ const createRole = () => {
         }})}
 
 
-const createEmployee = (cb) => {
+const createEmployee = () => {
     const questions = [
         {
             type: 'text',
