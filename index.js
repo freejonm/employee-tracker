@@ -76,6 +76,7 @@ const startApp = () => {
 };
 
 // create departments, roles, employees
+
 const createDepartment = () => {
     inquirer.prompt({
         name: 'department',
@@ -83,9 +84,9 @@ const createDepartment = () => {
         message: 'What is the name of the new department?',
     }).then((answer) => {
         
-        connection.query("INSERT INTO department (name) VALUES (?)", [answer.department]), (err, result) => {
-            console.table(result);
-        
+        connection.query("INSERT INTO department (name) VALUES (?)", [answer.department]), (err, res) => {
+            if (err) throw err;
+            console.log(res);
         }
     })
 
@@ -93,7 +94,6 @@ const createDepartment = () => {
 };
 
 const createRole = () => {
-    // an array of questions for inquirer
     const questions = [
         {
             type: 'text',
@@ -113,13 +113,14 @@ const createRole = () => {
         }
     ]
     inquirer.prompt(questions).then((answer) => {
-        connection.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [answer.roletitle, answer.rolesalary, answer.roledept]), (err, result) => {
-            console.table(result);
-        
+        connection.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)", [answer.roletitle, answer.rolesalary, answer.roledept]), (err, res) => {
+            if (err) throw err;
+
+            console.log(res);
         }})}
 
 
-const createEmployee = () => {
+const createEmployee = (cb) => {
     const questions = [
         {
             type: 'text',
@@ -139,21 +140,22 @@ const createEmployee = () => {
         }
     ]
     inquirer.prompt(questions).then((answer) => {
-        connection.query("INSERT INTO employee (first_name, last_name, role_id) VALUES (?, ?, ?)", [answer.firstname, answer.lastname, answer.roleid]), (err, result) => {
-            console.log(result);
+        connection.query("INSERT INTO employee (first_name, last_name, role_id) VALUES (?, ?, ?)", [answer.firstname, answer.lastname, answer.roleid]), (err, res) => {
+            if (err) throw err;
+
+            console.log(res);
             
         }})
 
 };
 
-// read departments roles, employes
+// read departments, roles, employes
 
 const viewDepartments = () => {
     connection.query('SELECT * FROM department ORDER BY id', (err, res) => {
         if (err) throw err;
 
         console.table(res);
-        
     })};
 
 
@@ -179,5 +181,20 @@ const viewRoles = () => {
 // update employee roles
 
 const updateRole = () => {
-
-};
+    const questions = [{
+        type: 'text',
+        message: 'What is the employee id?',   
+        name: 'empid',
+    }, 
+    {
+        type: 'text',
+        message: 'What is the id of their new role?',   
+        name: 'emprole',
+    }   
+]
+    inquirer.prompt(questions).then((answer) => {
+        connection.query(`UPDATE employee SET role_id = ${answer.emprole} WHERE id = ${answer.empid}`, (err, result) => {
+            if (err) throw err;
+            console.log(result);
+        
+    })})};
